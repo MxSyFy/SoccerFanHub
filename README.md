@@ -8,7 +8,7 @@ Welcome to Women's Soccer Hub! This platform is dedicated to providing enthusias
 - **Match Details**: Access detailed information about upcoming and past matches, including team lineups, match statistics, and more.
 - **Live Scores**: Stay up-to-date with live scores of ongoing matches.
 - **Filtering Options**: Easily find matches by country, location, league, and date.
-- **Favorite Teams and Matches**: Users can manage their favorite teams and matches to quickly access relevant information.
+- **Favorite Teams and Matches**: Users can manage their favorite teams and matches to quickly access relevant information. CRUD operations are supported for matches, teams, user authentication, and favorite teams and matches.
 
 ## Technologies Used
 
