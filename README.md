@@ -7,7 +7,7 @@ Welcome to Women's Soccer Hub! This platform is all about women's professional s
 
 - **Match Details:** Get info on upcoming and past matches, including lineups and stats.
 - **Live Scores:** Stay updated with ongoing match scores.
-- **Filtering Options:** Easily find matches by country, location, league, or date.
+- **Filtering Options:** Find matches by country, location, league, or date.
 
 ## Technologies Used
 
