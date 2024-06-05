@@ -43,5 +43,3 @@ Welcome to Women's Soccer Hub! This platform is all about women's professional s
 
 - **User Authentication:** Allow users to register, log in, and log out.
 - **Favorite Teams and Matches:** Let users manage their favorite teams and matches.
-- **Real-Time Updates:** Implement live updates for scores and match details.
-- **Responsive Design:** Ensure the platform works well on all devices.
