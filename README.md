@@ -42,5 +42,5 @@ Welcome to Women's Soccer Hub! This platform is all about women's professional s
 
 ## Stretch Goals
 
-- **User Authentication:** Allow users to register, log in, and log out.
+- **User Authentication:** Allow users to register and log in.
 - **Favorite Teams and Matches:** Let users choose and manage their favorite teams.
