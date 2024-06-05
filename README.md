@@ -15,6 +15,7 @@ Welcome to Women's Soccer Hub! This platform is all about women's professional s
 - **Backend:** Django
 - **Database:** Postgres
 - **APIs:** Integrated soccer data APIs for live scores and match details.
+- **Containerization:** Docker, Docker Compose
 
 ## Database Schema
 
