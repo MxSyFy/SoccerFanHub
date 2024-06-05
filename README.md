@@ -1,61 +1,47 @@
-# Soccer Fan Hub
+# Women's Soccer Hub
 
-Welcome to Women's Soccer Hub! This platform is dedicated to providing enthusiasts of women's professional soccer with all the information they need about matches, schedules, and scores. 
+Welcome to Women's Soccer Hub! This platform is all about women's professional soccer. Here's what you'll find:
 
-## Features
+## Main Features
 
-- **User Authentication**: Users can create accounts and log in.
-- **Match Details**: Access detailed information about upcoming and past matches, including team lineups, match statistics, and more.
-- **Live Scores**: Stay up-to-date with live scores of ongoing matches.
-- **Filtering Options**: Easily find matches by country, location, league, and date.
-- **Favorite Teams and Matches**: Users can manage their favorite teams and matches to quickly access relevant information. CRUD operations are supported for matches, teams, user authentication, and favorite teams and matches.
+- **Match Details:** Get info on upcoming and past matches, including lineups and stats.
+- **Live Scores:** Stay updated with ongoing match scores.
+- **Filtering Options:** Easily find matches by country, location, league, or date.
 
 ## Technologies Used
 
-- **Frontend**: React
-- **Backend**: Django
-- **Database**: Postgres
-- **Authentication**: JSON Web Tokens (JWT)
-- **APIs**: Integration with soccer data APIs including Sportradar Soccer and API-Football for live scores and match details.
+- **Frontend:** React
+- **Backend:** Django
+- **Database:** Postgres
+- **APIs:** Integrated soccer data APIs for live scores and match details.
 
-
-### Database Schema
-
-### Users
-
-| Field           | Description                                      |
-|-----------------|--------------------------------------------------|
-| _id             | Primary Key                                      |
-| username        | User's username                                  |
-| email           | User's email                                     |
-| password        | User's hashed password                           |
-| favoriteTeams   | Array of teamIds the user favorited              |
-| favoriteMatches | Array of matchIds the user favorited             |
+## Database Schema
 
 ### Teams
 
-| Field       | Description                            |
-|-------------|----------------------------------------|
-| _id         | Primary Key                            |
-| teamName    | Name of the team                       |
-| country     | Country of the team                    |
-| league      | League the team belongs to             |
-| logoURL     | URL of the team's logo                 |
-| players     | Array of playerIds in the team         |
+- **_id:** Primary Key
+- **teamName:** Name of the team
+- **country:** Country of the team
+- **league:** League the team belongs to
+- **logoURL:** URL of the team's logo
+- **players:** Array of playerIds in the team
 
 ### Matches
 
-| Field       | Description                                            |
-|-------------|--------------------------------------------------------|
-| _id         | Primary Key                                            |
-| homeTeamId  | Foreign Key referencing Teams for home team            |
-| awayTeamId  | Foreign Key referencing Teams for away team            |
-| startTime   | Start time of the match                                |
-| endTime     | End time of the match                                  |
-| location    | Location of the match                                  |
-| league      | League of the match                                    |
-| score       | Score of the match                                     |
-| status      | Status of the match (e.g., 'scheduled', 'in progress', 'finished') |
-| events      | Array of event objects, such as goals, cards, etc.     |
+- **_id:** Primary Key
+- **homeTeamId:** Foreign Key referencing Teams for home team
+- **awayTeamId:** Foreign Key referencing Teams for away team
+- **startTime:** Start time of the match
+- **endTime:** End time of the match
+- **location:** Location of the match
+- **league:** League of the match
+- **score:** Score of the match
+- **status:** Status of the match (e.g., 'scheduled', 'in progress', 'finished')
+- **events:** Array of event objects, such as goals, cards, etc.
 
+## Stretch Goals
 
+- **User Authentication:** Allow users to register, log in, and log out.
+- **Favorite Teams and Matches:** Let users manage their favorite teams and matches.
+- **Real-Time Updates:** Implement live updates for scores and match details.
+- **Responsive Design:** Ensure the platform works well on all devices.
