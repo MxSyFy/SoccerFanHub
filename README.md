@@ -1,6 +1,6 @@
-# Women's Soccer Hub
+# Soccer Fan Hub
 
-Welcome to Women's Soccer Hub! This platform is all about women's professional soccer.
+This website will be all about women's professional soccer.
 
 
 ## Main Features
