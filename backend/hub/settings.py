@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Configure Django REST Framework to use JSON rendering by default
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+
 
 # Application definition
 
@@ -83,10 +90,11 @@ DATABASES = {
         "NAME": "soccer_db",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "localhost",  
-        "PORT": 5454,
+        "HOST": "db", 
+        "PORT": 5432,
     }
 }
+
 
 
 # Password validation

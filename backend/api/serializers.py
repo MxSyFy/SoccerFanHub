@@ -1,16 +1,16 @@
-from django.contrib.auth.models import User
+# api/serializers.py
+
 from rest_framework import serializers
+from .models import Team, Match
 
-class UserSerializer(serializers.ModelSerializer):
+class TeamSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        model = Team
+        fields = ['id', 'teamName', 'country', 'league', 'logoURL', 'players']
 
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        return user
+class MatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = ['id', 'homeTeamId', 'awayTeamId', 'startTime', 'endTime', 'location', 'league', 'score', 'status', 'events']
+
+
