@@ -15,7 +15,7 @@ class TeamView(APIView):
         else:
             teams = Team.objects.all()
             serializer = TeamSerializer(teams, many=True)
-        return Response({"result": serializer.data})
+        return Response(serializer.data)
 
     def post(self, request):
         team = request.data
@@ -37,6 +37,7 @@ class TeamView(APIView):
         team.delete()
         return Response({"result": f"Team id {pk} deleted"}, status=204)
 
+
 class MatchView(APIView):
 
     def get(self, request, pk=None):
@@ -46,7 +47,7 @@ class MatchView(APIView):
         else:
             matches = Match.objects.all()
             serializer = MatchSerializer(matches, many=True)
-        return Response({"result": serializer.data})
+        return Response(serializer.data)
 
     def post(self, request):
         match = request.data

@@ -11,3 +11,4 @@ urlpatterns = [
     path('api/matches/', MatchView.as_view(), name='matches'),
     path('api/matches/<int:pk>/', MatchView.as_view(), name='match-detail'),
 ]
+

@@ -5,8 +5,8 @@ from django.db import models
 class Team(models.Model):
     team_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=100)
-    country_code = models.CharField(max_length=10)
-    gender = models.CharField(max_length=10)
+    country_code = CountryField()  # Use django_countries package
+    gender = models.CharField(max_length=10, default='female')
     type = models.CharField(max_length=50)
     logo_url = models.URLField(blank=True, null=True)
     players = models.JSONField(blank=True, null=True)

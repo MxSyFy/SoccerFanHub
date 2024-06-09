@@ -6,11 +6,9 @@ from .models import Team, Match
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'teamName', 'country', 'league', 'logoURL', 'players']
+        fields = ['id', 'name', 'country_code', 'type', 'logo_url', 'players']
 
 class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-        fields = ['id', 'homeTeamId', 'awayTeamId', 'startTime', 'endTime', 'location', 'league', 'score', 'status', 'events']
-
-
+        fields = ['id', 'home_team', 'away_team', 'start_time', 'end_time', 'location', 'league', 'score', 'status', 'events']
