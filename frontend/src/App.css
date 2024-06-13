@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.CompetitionsList {
+  text-align: center;
+}
+
+.CompetitionsList .competition-list {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+}
+
+.CompetitionsList .competition-list li {
+  margin-bottom: 1em; /* Optional: Add spacing between list items */
+}

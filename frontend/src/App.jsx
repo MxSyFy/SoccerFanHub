@@ -1,15 +1,13 @@
-
-import './App.css'
+import React from 'react';
+import './App.css';
+import CompetitionsList from './components/CompetitionsList';
 
 function App() {
-
   return (
-    <>
-      <p>
-        Template
-      </p>
-    </>
-  )
+    <div className="App">
+      <CompetitionsList />
+    </div>
+  );
 }
 
-export default App
+export default App;
