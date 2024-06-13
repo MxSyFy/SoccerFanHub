@@ -2,7 +2,6 @@
 
 This website will be all about women's professional soccer.
 
-
 ## Main Features
 
 - **Match Details:** Get info on upcoming and past matches, including lineups and stats.
@@ -19,27 +18,35 @@ This website will be all about women's professional soccer.
 
 ## Database Schema
 
-### Teams
+### Competitions
 
-- **_id:** Primary Key
-- **teamName:** Name of the team
-- **country:** Country of the team
-- **league:** League the team belongs to
-- **logoURL:** URL of the team's logo
-- **players:** Array of playerIds in the team
+- **id:** Primary Key (string)
+- **name:** Name of the competition (string)
+- **gender:** Gender category (string)
+- **category_id:** Category ID (string)
+- **category_name:** Category name (string)
+- **country_code:** Country code (nullable string)
+
+### Competitors
+
+- **id:** Primary Key (string)
+- **name:** Name of the competitor (string)
+- **country:** Country of the competitor (nullable string)
+- **abbreviation:** Abbreviation of the competitor (nullable string)
+- **gender:** Gender category (nullable string)
 
 ### Matches
 
-- **_id:** Primary Key
-- **homeTeamId:** Foreign Key referencing Teams for home team
-- **awayTeamId:** Foreign Key referencing Teams for away team
-- **startTime:** Start time of the match
-- **endTime:** End time of the match
-- **location:** Location of the match
-- **league:** League of the match
-- **score:** Score of the match
-- **status:** Status of the match (e.g., 'scheduled', 'in progress', 'finished')
-- **events:** Array of event objects, such as goals, cards, etc.
+- **id:** Primary Key (string)
+- **competition_id:** Foreign Key referencing Competitions (string)
+- **season_id:** Season ID (string)
+- **start_time:** Start time of the match (DateTime)
+- **home_team_id:** Foreign Key referencing Competitors for home team (string)
+- **away_team_id:** Foreign Key referencing Competitors for away team (string)
+- **home_score:** Score of the home team (integer)
+- **away_score:** Score of the away team (integer)
+- **status:** Status of the match (string, e.g., 'scheduled', 'in progress', 'finished')
+- **winner_id:** Foreign Key referencing Competitors for the winner team (nullable string)
 
 ## Stretch Goals
 
