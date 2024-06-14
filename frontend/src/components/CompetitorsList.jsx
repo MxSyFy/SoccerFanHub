@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from './Header'; // Import the Header component
+import Header from './Header';
 
 function CompetitorsList() {
   const { competitionId } = useParams();
