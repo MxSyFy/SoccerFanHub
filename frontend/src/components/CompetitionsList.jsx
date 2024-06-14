@@ -1,6 +1,7 @@
-// src/components/CompetitionList.jsx
+// src/components/CompetitionsList.jsx
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function CompetitionsList() {
   const [competitionsByCountry, setCompetitionsByCountry] = useState({});
@@ -66,7 +67,9 @@ function CompetitionsList() {
           <ul className="competition-list">
             {competitionsByCountry[countryCode].competitions.map((competition) => (
               <li key={competition.id}>
-                <strong>{competition.name}</strong> - {competition.category.name}
+                <Link to={`/competitors/${competition.id}`}>
+                  <strong>{competition.name}</strong>
+                </Link>
               </li>
             ))}
           </ul>
