@@ -6,26 +6,31 @@ import { useParams } from 'react-router-dom';
 function CompetitorsList() {
   const { competitionId } = useParams();
   const [competitors, setCompetitors] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/api/competitions/${competitionId}/competitors/`);
-
+      const url = `http://localhost:8000/api/competitions/${competitionId}/competitors/`;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         if (data && data.competitors) {
           const sortedCompetitors = data.competitors.sort((a, b) => a.name.localeCompare(b.name));
           setCompetitors(sortedCompetitors);
         } else {
-          console.error('No competitors data found in response');
+          setError('No competitors data found');
         }
       } else {
-        console.error('Failed to fetch competitors');
+        setError('Failed to fetch competitors');
       }
     };
 
     fetchData();
   }, [competitionId]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="CompetitorsList">

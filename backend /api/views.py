@@ -1,31 +1,41 @@
 # api/views.py
 
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 import requests
+import time
 
-# Sportradar API key and base URL
 API_KEY = '4Iz53uKY8MaQs8q54t85Q9InTfObDj984WFONWTn'
 BASE_URL = 'https://api.sportradar.com/soccer/trial/v4/en/'
 
-@api_view(['GET'])
-def get_competitions(request):
-    # Endpoint URL for fetching competitions
-    url = f'{BASE_URL}/competitions.json'
+def make_request(url):
     headers = {'Accept': 'application/json'}
     params = {'api_key': API_KEY}
+    retries = 3
+    delay = 1
 
-    # Make a GET request to fetch competitions data
-    response = requests.get(url, headers=headers, params=params)
-    if response.status_code != 200:
-        # Handle request failure
-        return Response({'error': 'Failed to retrieve competitions'}, status=response.status_code)
+    while retries > 0:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 429:
+            time.sleep(delay)
+            delay *= 2
+            retries -= 1
+        else:
+            return None
+    return None
 
-    # Parse the JSON response
-    data = response.json()
+@api_view(['GET'])
+def get_competitions(request):
+    url = f'{BASE_URL}/competitions.json'
+    data = make_request(url)
+    
+    if not data:
+        return Response({'error': 'Failed to retrieve competitions'}, status=500)
 
-    # Filter competitions where gender is 'women'
-    filtered_competitions = [
+    competitions = [
         {
             'id': comp['id'],
             'name': comp['name'],
@@ -35,47 +45,26 @@ def get_competitions(request):
         for comp in data.get('competitions', [])
         if comp.get('gender') == 'women'
     ]
-
-    # Return filtered competitions
-    return Response({'competitions': filtered_competitions})
+    
+    return Response({'competitions': competitions})
 
 @api_view(['GET'])
 def get_competitors(request, competition_id):
-    # Endpoint URL to fetch seasons for a specific competition
     seasons_url = f'{BASE_URL}/competitions/{competition_id}/seasons.json'
-    headers = {'Accept': 'application/json'}
-    params = {'api_key': API_KEY}
-
-    # Make a GET request to fetch seasons data
-    response = requests.get(seasons_url, headers=headers, params=params)
-    if response.status_code != 200:
-        # Handle request failure
-        return Response({'error': 'Failed to retrieve competitors'}, status=response.status_code)
-
-    # Parse the JSON response
-    data = response.json()
-
-    # Sort seasons by start date in descending order
-    data['seasons'].sort(key=lambda x: x['start_date'], reverse=True)
-
-    # Get the ID of the most recent season
-    most_recent_season = data['seasons'][0]['id'] if data['seasons'] else None
-
-    if not most_recent_season:
-        # Handle no seasons found for the competition
+    data = make_request(seasons_url)
+    
+    if not data or not data.get('seasons'):
         return Response({'error': 'No seasons found for this competition'}, status=404)
 
-    # Endpoint URL to fetch competitors for the most recent season
+    seasons = data['seasons']
+    seasons.sort(key=lambda x: x['start_date'], reverse=True)
+    most_recent_season = seasons[0]['id']
     competitors_url = f'{BASE_URL}/seasons/{most_recent_season}/competitors.json'
-    response = requests.get(competitors_url, headers=headers, params=params)
-    if response.status_code != 200:
-        # Handle request failure
-        return Response({'error': 'Failed to retrieve competitors'}, status=response.status_code)
+    competitors_data = make_request(competitors_url)
 
-    # Parse competitors data from JSON response
-    competitors_data = response.json().get('season_competitors', [])
+    if not competitors_data:
+        return Response({'error': 'Failed to retrieve competitors'}, status=500)
 
-    # Format competitors data
     competitors = [
         {
             'id': competitor['id'],
@@ -84,49 +73,28 @@ def get_competitors(request, competition_id):
             'abbreviation': competitor.get('abbreviation'),
             'gender': competitor.get('gender')
         }
-        for competitor in competitors_data
+        for competitor in competitors_data.get('season_competitors', [])
     ]
 
-    # Return competitors data
     return Response({'competitors': competitors})
 
 @api_view(['GET'])
 def get_matches(request, competition_id):
-    # Endpoint URL to fetch seasons for a specific competition
     seasons_url = f'{BASE_URL}/competitions/{competition_id}/seasons.json'
-    headers = {'Accept': 'application/json'}
-    params = {'api_key': API_KEY}
+    data = make_request(seasons_url)
 
-    # Make a GET request to fetch seasons data
-    response = requests.get(seasons_url, headers=headers, params=params)
-    if response.status_code != 200:
-        # Handle request failure
-        return Response({'error': 'Failed to retrieve matches'}, status=response.status_code)
-
-    # Parse the JSON response
-    data = response.json()
-
-    # Sort seasons by start date in descending order
-    data['seasons'].sort(key=lambda x: x['start_date'], reverse=True)
-
-    # Get the ID of the most recent season
-    most_recent_season = data['seasons'][0]['id'] if data['seasons'] else None
-
-    if not most_recent_season:
-        # Handle no seasons found for the competition
+    if not data or not data.get('seasons'):
         return Response({'error': 'No seasons found for this competition'}, status=404)
 
-    # Endpoint URL to fetch schedules/matches for the most recent season
+    seasons = data['seasons']
+    seasons.sort(key=lambda x: x['start_date'], reverse=True)
+    most_recent_season = seasons[0]['id']
     schedules_url = f'{BASE_URL}/seasons/{most_recent_season}/schedules.json'
-    response = requests.get(schedules_url, headers=headers, params=params)
-    if response.status_code != 200:
-        # Handle request failure
-        return Response({'error': 'Failed to retrieve matches'}, status=response.status_code)
+    schedules_data = make_request(schedules_url)
 
-    # Parse schedules/matches data from JSON response
-    schedules_data = response.json().get('schedules', [])
+    if not schedules_data:
+        return Response({'error': 'Failed to retrieve matches'}, status=500)
 
-    # Format matches data
     matches = [
         {
             'id': schedule['sport_event']['id'],
@@ -138,8 +106,7 @@ def get_matches(request, competition_id):
             'status': schedule['sport_event_status']['status'],
             'winner': schedule['sport_event_status'].get('winner_id', '')
         }
-        for schedule in schedules_data
+        for schedule in schedules_data.get('schedules', [])
     ]
 
-    # Return matches data
     return Response({'matches': matches})

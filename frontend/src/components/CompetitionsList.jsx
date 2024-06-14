@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 function CompetitionsList() {
   const [competitionsByCountry, setCompetitionsByCountry] = useState({});
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCompetitions = async () => {
@@ -15,11 +17,12 @@ function CompetitionsList() {
           const categorizedCompetitions = categorizeCompetitions(data.competitions);
           setCompetitionsByCountry(categorizedCompetitions);
         } else {
-          console.error('No competitions data found in response');
+          setError('No competitions data found');
         }
       } else {
-        console.error('Failed to fetch competitions');
+        setError('Failed to fetch competitions');
       }
+      setLoading(false);
     };
 
     fetchCompetitions();
@@ -30,23 +33,19 @@ function CompetitionsList() {
 
     competitions.forEach((competition) => {
       const { country_code, name } = competition.category;
-
       if (!categorized[country_code]) {
         categorized[country_code] = {
           country: name,
           competitions: []
         };
       }
-
       categorized[country_code].competitions.push(competition);
     });
 
-    // Sort competitions alphabetically by country name
     const sortedCategories = Object.keys(categorized).sort((a, b) =>
       categorized[a].country.localeCompare(categorized[b].country)
     );
 
-    // Create a new object with sorted competitions by country
     const sortedCompetitionsByCountry = {};
     sortedCategories.forEach((country_code) => {
       sortedCompetitionsByCountry[country_code] = categorized[country_code];
@@ -58,6 +57,14 @@ function CompetitionsList() {
     return sortedCompetitionsByCountry;
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="CompetitionsList">
       <h1>List of Competitions</h1>
@@ -67,7 +74,7 @@ function CompetitionsList() {
           <ul className="competition-list">
             {competitionsByCountry[countryCode].competitions.map((competition) => (
               <li key={competition.id}>
-                <Link to={`/competitors/${competition.id}`}>
+                <Link to={`/competitions/${competition.id}/competitors`}>
                   <strong>{competition.name}</strong>
                 </Link>
               </li>
