@@ -1,3 +1,5 @@
+// src/App.jsx
+
 import React from 'react';
 import './App.css';
 import CompetitionsList from './components/CompetitionsList';
