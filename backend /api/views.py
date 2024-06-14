@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 import requests
 
 # Sportradar API key and base URL
-API_KEY = '4Iz53uKY8MaQs8q54t85Q9InTfObDj984WFONWTn'
+API_KEY = 'THrKg3qzoKQzdwaFFubG6xUtoIPpAEq5Y6bwiE8g'
 BASE_URL = 'https://api.sportradar.com/soccer/trial/v4/en/'
 
 # Cache timeout set to 1 hour (3600 seconds)

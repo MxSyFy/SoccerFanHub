@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Header from './Header'; // Import the Header component
 
 function CompetitorsList() {
   const { competitionId } = useParams();
@@ -34,7 +35,8 @@ function CompetitorsList() {
 
   return (
     <div className="CompetitorsList">
-      <h1>List of Competitors</h1>
+      <Header />
+      <h2>List of Competitors</h2>
       <ul>
         {competitors.map((competitor) => (
           <li key={competitor.id}>{competitor.name}</li>

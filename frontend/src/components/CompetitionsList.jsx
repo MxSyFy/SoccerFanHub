@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Header from './Header'; // Import the Header component
 
 function CompetitionsList() {
   const [competitionsByCountry, setCompetitionsByCountry] = useState({});
@@ -67,10 +68,11 @@ function CompetitionsList() {
 
   return (
     <div className="CompetitionsList">
-      <h1>List of Competitions</h1>
+      <Header /> {/* Include the Header component */}
+      <h2>List of Competitions</h2>
       {Object.keys(competitionsByCountry).map((countryCode) => (
         <div key={countryCode}>
-          <h2>{competitionsByCountry[countryCode].country}</h2>
+          <h3>{competitionsByCountry[countryCode].country}</h3>
           <ul className="competition-list">
             {competitionsByCountry[countryCode].competitions.map((competition) => (
               <li key={competition.id}>
