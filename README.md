@@ -18,7 +18,8 @@ This website will be all about women's professional soccer.
 
 ## Database Schema
 
-![Database Schema](backend/db_schema.png)
+![Database Schema](https://file+.vscode-resource.vscode-cdn.net/Users/sandyfuentes/Desktop/Foxtrot-EW/MOD09/SoccerFanHub/backend%20/db_schema.png?version%3D1718413543115backend/db_schema.png)
+
 
 ### Competitions
 
