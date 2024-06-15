@@ -26,20 +26,35 @@
   color: #888;
 }
 
-.CompetitionsList {
+.CompetitionsList,
+.CompetitorsList,
+.MatchesList {
   text-align: left;
 }
 
-.competition-list {
+.match-list {
   list-style: none;
   padding: 0;
 }
 
-.CompetitorsList {
-  text-align: left;
+.match {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center; /* Center text within the match box */
 }
 
-.competitor-list {
-  list-style: none;
-  padding: 0;
+.match-date {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.match-teams {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.match-status {
+  font-style: italic;
+  color: #666;
 }

@@ -126,3 +126,47 @@ def get_matches(request, competition_id):
     
     cache.set(cache_key, matches, CACHE_TIMEOUT)  # Store filtered data in cache
     return Response({'matches': matches})  # Return the data
+
+@api_view(['GET'])
+def get_competitor_matches(request, competition_id, competitor_id):
+    cache_key = f'competitor_matches_{competition_id}_{competitor_id}'
+    cached_data = cache.get(cache_key)
+
+    if cached_data:
+        return Response({'matches': cached_data})
+
+    seasons_url = f'{BASE_URL}/competitions/{competition_id}/seasons.json'
+    params = {'api_key': API_KEY}
+
+    response = requests.get(seasons_url, params=params)
+    response.raise_for_status()
+    data = response.json()
+
+    data['seasons'].sort(key=lambda x: x['start_date'], reverse=True)
+    most_recent_season = data['seasons'][0]['id'] if data['seasons'] else None
+
+    if not most_recent_season:
+        return Response({'error': 'No seasons found for this competition'}, status=404)
+
+    schedules_url = f'{BASE_URL}/seasons/{most_recent_season}/schedules.json'
+    response = requests.get(schedules_url, params=params)
+    response.raise_for_status()
+
+    schedules_data = response.json().get('schedules', [])
+    matches = [
+        {
+            'id': schedule['sport_event']['id'],
+            'start_time': schedule['sport_event']['start_time'],
+            'home_team': schedule['sport_event']['competitors'][0]['name'],
+            'away_team': schedule['sport_event']['competitors'][1]['name'],
+            'home_score': schedule['sport_event_status'].get('home_score', 0),
+            'away_score': schedule['sport_event_status'].get('away_score', 0),
+            'status': schedule['sport_event_status']['status'],
+            'winner': schedule['sport_event_status'].get('winner_id', '')
+        }
+        for schedule in schedules_data
+        if competitor_id in [comp['id'] for comp in schedule['sport_event']['competitors']]
+    ]
+
+    cache.set(cache_key, matches, CACHE_TIMEOUT)
+    return Response({'matches': matches})

@@ -1,49 +1,53 @@
 // src/components/CompetitorsList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 
 function CompetitorsList() {
-  const { competitionId } = useParams();
-  const [competitors, setCompetitors] = useState([]);
-  const [error, setError] = useState(null);
+    const { competitionId } = useParams();
+    const [competitors, setCompetitors] = useState([]);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = `http://localhost:8000/api/competitions/${competitionId}/competitors/`;
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.competitors) {
-          const sortedCompetitors = data.competitors.sort((a, b) => a.name.localeCompare(b.name));
-          setCompetitors(sortedCompetitors);
-        } else {
-          setError('No competitors data found');
-        }
-      } else {
-        setError('Failed to fetch competitors');
-      }
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            const url = `http://localhost:8000/api/competitions/${competitionId}/competitors/`;
+            const response = await fetch(url);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && data.competitors) {
+                    const sortedCompetitors = data.competitors.sort((a, b) => a.name.localeCompare(b.name));
+                    setCompetitors(sortedCompetitors);
+                } else {
+                    setError('No competitors data found');
+                }
+            } else {
+                setError('Failed to fetch competitors');
+            }
+        };
 
-    fetchData();
-  }, [competitionId]);
+        fetchData();
+    }, [competitionId]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
-  return (
-    <div className="CompetitorsList">
-      <Header />
-      <h2>List of Competitors</h2>
-      <ul>
-        {competitors.map((competitor) => (
-          <li key={competitor.id}>{competitor.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div className="CompetitorsList">
+            <Header />
+            <h2>List of Competitors</h2>
+            <ul>
+                {competitors.map((competitor) => (
+                    <li key={competitor.id}>
+                        <Link to={`/competitions/${competitionId}/competitors/${competitor.id}/matches`}>
+                            {competitor.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export default CompetitorsList;
