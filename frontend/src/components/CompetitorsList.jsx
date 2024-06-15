@@ -24,7 +24,7 @@ function CompetitorsList() {
     return (
         <div className="CompetitorsList">
             <Header />
-            <h2>Competitors in Competition</h2>
+            <h2>Competitors</h2>
             <ul>
                 {competitors.map((competitor) => (
                     <li key={competitor.id} className="competitor">

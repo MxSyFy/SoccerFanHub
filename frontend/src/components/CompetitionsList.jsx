@@ -68,8 +68,8 @@ function CompetitionsList() {
 
   return (
     <div className="CompetitionsList">
-      <Header /> {/* Include the Header component */}
-      <h2>List of Competitions</h2>
+      <Header />
+      <h2>Competitions</h2>
       {Object.keys(competitionsByCountry).map((countryCode) => (
         <div key={countryCode}>
           <h3>{competitionsByCountry[countryCode].country}</h3>

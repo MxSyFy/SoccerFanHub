@@ -28,7 +28,7 @@ function MatchesList() {
     return (
         <div className="MatchesList">
             <Header />
-            <h2>Matches of Competitor</h2>
+            <h2>Matches</h2>
 
             {/* Live Matches */}
             <section>
