@@ -18,6 +18,8 @@ This website will be all about women's professional soccer.
 
 ## Database Schema
 
+![Database Schema](backend/db_schema.png)
+
 ### Competitions
 
 - **id:** Primary Key (string)
