@@ -6,7 +6,7 @@ This website will be all about women's professional soccer.
 
 - **Competitions List:** Browse a comprehensive list of competitions ordered by country.
 - **Competitors List:** Explore competitors participating in each competition.
-- **Match Details:** View details of upcoming and past matches by competitor.
+- **Match Details:** View details of live, upcoming and past matches by competitor.
 
 ## Technologies Used
 
@@ -23,7 +23,6 @@ This website will be all about women's professional soccer.
 
 ## Stretch Goals
 
-- **Live Scores:** Stay updated with ongoing match scores.
 - **Filtering Options:** Find matches by country, location, league, or date.
 - **User Authentication:** Allow users to register and log in.
 - **Favorite Teams and Matches:** Let users choose and manage their favorite teams.
