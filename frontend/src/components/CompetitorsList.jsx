@@ -1,45 +1,33 @@
 // src/components/CompetitorsList.jsx
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from './Header';
 
 function CompetitorsList() {
     const { competitionId } = useParams();
     const [competitors, setCompetitors] = useState([]);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchCompetitors = async () => {
             const url = `http://localhost:8000/api/competitions/${competitionId}/competitors/`;
             const response = await fetch(url);
-            if (response.ok) {
-                const data = await response.json();
-                if (data && data.competitors) {
-                    const sortedCompetitors = data.competitors.sort((a, b) => a.name.localeCompare(b.name));
-                    setCompetitors(sortedCompetitors);
-                } else {
-                    setError('No competitors data found');
-                }
-            } else {
-                setError('Failed to fetch competitors');
+            const data = await response.json();
+            if (data && data.competitors) {
+                setCompetitors(data.competitors);
             }
         };
 
-        fetchData();
+        fetchCompetitors();
     }, [competitionId]);
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (
         <div className="CompetitorsList">
             <Header />
-            <h2>List of Competitors</h2>
+            <h2>Competitors in Competition</h2>
             <ul>
                 {competitors.map((competitor) => (
-                    <li key={competitor.id}>
+                    <li key={competitor.id} className="competitor">
                         <Link to={`/competitions/${competitionId}/competitors/${competitor.id}/matches`}>
                             {competitor.name}
                         </Link>
